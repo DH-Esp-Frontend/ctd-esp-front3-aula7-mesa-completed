@@ -1,16 +1,10 @@
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import useSWR from "swr";
+import { fetcher } from "..";
 
-// Exemplo da utilização do SWR, mas você pode utilizar fetch, axios...
-const fetcher = async (url) => {
-  const res = await fetch(url);
-  const data = await res.json();
 
-  if (res.status !== 200) {
-    throw new Error(data.message);
-  }
-  return data;
-};
 
 const Bolo = () => {
   const { query } = useRouter();
@@ -24,10 +18,17 @@ const Bolo = () => {
   if (!data) return <div>Carregando...</div>;
 
   return (
-    <h2>
-      Iremos renderizar os dados completo do bolo aqui, além disso crie um botão
-      para voltar para a página inicial utilizando o componente Link do Next.js
-    </h2>
+    <>
+      <Link href="/">Home</Link>
+      <div>
+        <h2>{data.title}</h2>
+        <Image src={data.image} width={300} height={150} />
+        <h3>Description</h3>
+        <p>{data.description}</p>
+        <h3>Texto de preparo</h3>
+        <p>{data.text}</p>
+      </div>
+    </>
   );
 };
 
